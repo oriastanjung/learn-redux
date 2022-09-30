@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {useDispatch, useSelector} from "react-redux"
-import {setUsers} from "../../store/reducers/usersSlice"
+import {setUsers, fetchUsers} from "../../store/reducers/usersSlice"
 import {Link } from  "react-router-dom"
 
 function Users() {
@@ -9,31 +9,24 @@ function Users() {
 
     const dispatch = useDispatch()
 
-    const {usersList} = useSelector(state => state.users);
+    const {usersList, isLoading} = useSelector(state => state.users);
 
-    const fetchUsers = async () => {
-        try {
-            const res = await fetch("https://randomuser.me/api/?results=10");
-            const data = await res.json()
-            // setUsers(data.results)
-
-            dispatch(setUsers(data.results))
-
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    
 
     useEffect(() => {
-        fetchUsers()
+        dispatch(fetchUsers())
     },[])
   return (
     <div>
-
+        <nav>
+            <Link to={'/users-list'}>
+                UsersList on Table
+            </Link>
+        </nav>
     {/* {console.log(usersList)} */}
 
-
-        {usersList && usersList.map((item) => {
+        {isLoading && <h1>Loading Data</h1>}
+        {!isLoading && usersList.map((item) => {
             return (
                 <div> 
                     {/* {console.log(usersList)} */}
