@@ -1,11 +1,12 @@
-import React from 'react'
-import {Link } from  "react-router-dom"
-
+import React from "react";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
-    <div>Navbar</div>
-  )
+    <nav>
+      <Link to={"/users-list"}>UsersList on Table</Link>
+    </nav>
+  );
 }
 
-export default Navbar
+export default Navbar;
